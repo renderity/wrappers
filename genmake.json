@@ -1,0 +1,113 @@
+{
+	"variables":
+	{
+		"gcc-x64":
+		{
+			"REPS": "/home/denis/reps"
+		},
+
+		"clang-wasm32":
+		{
+			"REPS": "/home/denis/reps",
+			"FLAGS_ADD": "-matomics -mbulk-memory"
+		},
+
+		"clang-wasm64":
+		{
+			"REPS": "/home/denis/reps",
+			"FLAGS_ADD": "-matomics -mbulk-memory"
+		}
+	},
+
+	"entries":
+	{
+		"type": "static",
+
+		"name": "wrappers",
+
+		"include_directories": "$(REPS)/renderity",
+
+		"flags": "$(STD_20) $(NO_LINK) $(VERBOSE) $(OPT_FASTX) $(SSE) $(FLAGS_ADD) -fPIC",
+
+		"watch_files":
+		[
+			{
+				"file": "$(SRC)/base/base.cpp",
+				"watch_files": "$(SRC)/base/base.h"
+			},
+
+			{
+				"file": "$(SRC)/renderer/renderer.cpp",
+				"watch_files":
+				[
+					"$(SRC)/base/base.h",
+					"$(SRC)/renderer/renderer.h"
+				]
+			},
+
+			{
+				"file": "$(SRC)/uniform/uniform.cpp",
+				"watch_files":
+				[
+					"$(SRC)/base/base.h",
+					"$(SRC)/uniform/uniform.h"
+				]
+			},
+
+			{
+				"file": "$(SRC)/uniform-block/uniform-block.cpp",
+
+				"watch_files":
+				[
+					"$(SRC)/base/base.h",
+					"$(SRC)/uniform/uniform.h",
+					"$(SRC)/uniform-block/uniform-block.h"
+				]
+			},
+
+			{
+				"file": "$(SRC)/descriptor-set/descriptor-set.cpp",
+
+				"watch_files":
+				[
+					"$(SRC)/base/base.h",
+					"$(SRC)/uniform-block/uniform-block.h",
+					"$(SRC)/descriptor-set/descriptor-set.h"
+				]
+			},
+
+			{
+				"file": "$(SRC)/material/material.cpp",
+
+				"watch_files":
+				[
+					"$(SRC)/base/base.h",
+					"$(SRC)/uniform/uniform.h",
+					"$(SRC)/uniform-block/uniform-block.h",
+					"$(SRC)/descriptor-set/descriptor-set.h",
+					"$(SRC)/material/material.h"
+				]
+			},
+
+			{
+				"file": "$(SRC)/object/object.cpp",
+				"watch_files":
+				[
+					"$(SRC)/base/base.h",
+					"$(SRC)/object/object.h"
+				]
+			},
+
+			{
+				"file": "$(SRC)/scene/scene.cpp",
+
+				"watch_files":
+				[
+					"$(SRC)/base/base.h",
+					"$(SRC)/object/object.h",
+					"$(SRC)/scene/scene.h"
+				]
+			}
+		]
+	}
+}
