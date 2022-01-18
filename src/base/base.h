@@ -15,8 +15,8 @@ namespace RDTY
 	{
 		struct Base
 		{
-			void* opengl_impl {};
-			void* vulkan_impl {};
+			void* impl_opengl {};
+			void* impl_vulkan {};
 		};
 	}
 }
