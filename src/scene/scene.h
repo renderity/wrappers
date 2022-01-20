@@ -10,19 +10,16 @@
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	struct Scene : public Base
 	{
-		struct Scene : public Base
-		{
-			std::vector<float> vertex_data {};
-			// std::vector<uint32_t> index_data;
+		std::vector<float> vertex_data {};
+		// std::vector<uint32_t> index_data;
 
-			void addObject (Object&);
-			void addObject (Object*);
-		};
-	}
+		void addObject (Object&);
+		void addObject (Object*);
+	};
 }
 
 

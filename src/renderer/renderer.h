@@ -3,25 +3,21 @@
 
 
 
-// size_t
-#include <cstddef>
+#include <cstddef> // size_t
 
 // #ifdef __wasm__
 #include "wrappers/src/base/base.h"
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	// #ifdef __wasm__
+	struct Renderer : public Base
 	{
-		// #ifdef __wasm__
-		struct Renderer : public Base
-		{
-			size_t width {};
-			size_t height {};
-		};
-	}
+		size_t width {};
+		size_t height {};
+	};
 }
 
 

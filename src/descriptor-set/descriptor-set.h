@@ -14,15 +14,12 @@
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	struct DescriptorSet : public Base
 	{
-		struct DescriptorSet : public Base
-		{
-			std::vector<UniformBlock*> bindings {};
-		};
-	}
+		std::vector<UniformBlock*> bindings {};
+	};
 }
 
 

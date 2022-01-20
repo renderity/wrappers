@@ -2,16 +2,13 @@
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	struct RendererOffsets
 	{
-		struct RendererOffsets
-		{
-			size_t width { offsetof(Renderer, width) };
-			size_t height { offsetof(Renderer, height) };
-		};
+		size_t width { offsetof(Renderer, width) };
+		size_t height { offsetof(Renderer, height) };
+	};
 
-		RendererOffsets renderer_offsets {};
-	}
+	RendererOffsets renderer_offsets {};
 }

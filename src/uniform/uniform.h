@@ -3,29 +3,25 @@
 
 
 
-// size_t
-#include <cstddef>
+#include <cstddef> // size_t
 #include <string>
 
 #include "wrappers/src/base/base.h"
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	struct Uniform : public Base
 	{
-		struct Uniform : public Base
-		{
-			void* object_addr {};
+		void* object_addr {};
 
-			std::string name {};
+		std::string name {};
 
-			size_t block_index {};
+		size_t block_index {};
 
-			size_t size {};
-		};
-	}
+		size_t size {};
+	};
 }
 
 

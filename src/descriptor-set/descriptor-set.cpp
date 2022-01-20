@@ -1,19 +1,15 @@
-// size_t
-#include <cstddef>
+#include <cstddef> // size_t
 
 #include "wrappers/src/descriptor-set/descriptor-set.h"
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	struct DescriptorSetOffsets
 	{
-		struct DescriptorSetOffsets
-		{
-			size_t bindings = offsetof(DescriptorSet, bindings);
-		};
+		size_t bindings = offsetof(DescriptorSet, bindings);
+	};
 
-		DescriptorSetOffsets descriptor_set_offsets {};
-	}
+	DescriptorSetOffsets descriptor_set_offsets {};
 }

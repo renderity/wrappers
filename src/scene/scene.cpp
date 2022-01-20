@@ -1,38 +1,33 @@
-// size_t
-#include <cstddef>
-// memcpy
+#include <cstddef> // size_t
 #include <cstring>
 
 #include "wrappers/src/scene/scene.h"
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	void Scene::addObject (Object& object)
 	{
-		void Scene::addObject (Object& object)
-		{
-			object.scene_vertex_data_offset = vertex_data.size() / 3;
-			object.scene_vertex_data_length = object.vertex_data.size() / 3;
+		object.scene_vertex_data_offset = vertex_data.size() / 3;
+		object.scene_vertex_data_length = object.vertex_data.size() / 3;
 
-			size_t asd = vertex_data.size();
+		size_t asd = vertex_data.size();
 
-			vertex_data.resize(vertex_data.size() + object.vertex_data.size());
+		vertex_data.resize(vertex_data.size() + object.vertex_data.size());
 
-			memcpy(vertex_data.data() + asd, object.vertex_data.data(), object.vertex_data.size() * 4);
-		}
+		memcpy(vertex_data.data() + asd, object.vertex_data.data(), object.vertex_data.size() * 4);
+	}
 
-		void Scene::addObject (Object* object)
-		{
-			object->scene_vertex_data_offset = vertex_data.size() / 3;
-			object->scene_vertex_data_length = object->vertex_data.size() / 3;
+	void Scene::addObject (Object* object)
+	{
+		object->scene_vertex_data_offset = vertex_data.size() / 3;
+		object->scene_vertex_data_length = object->vertex_data.size() / 3;
 
-			size_t asd = vertex_data.size();
+		size_t asd = vertex_data.size();
 
-			vertex_data.resize(vertex_data.size() + object->vertex_data.size());
+		vertex_data.resize(vertex_data.size() + object->vertex_data.size());
 
-			memcpy(vertex_data.data() + asd, object->vertex_data.data(), object->vertex_data.size() * 4);
-		}
+		memcpy(vertex_data.data() + asd, object->vertex_data.data(), object->vertex_data.size() * 4);
 	}
 }

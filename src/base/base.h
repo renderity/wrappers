@@ -3,22 +3,18 @@
 
 
 
-// size_t
-#include <cstddef>
+// #include <cstddef> // size_t
 #include <string>
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	struct Base
 	{
-		struct Base
-		{
-			void* impl_opengl {};
-			void* impl_vulkan {};
-		};
-	}
+		void* impl_opengl {};
+		void* impl_vulkan {};
+	};
 }
 
 

@@ -3,8 +3,7 @@
 
 
 
-// size_t
-#include <cstddef>
+#include <cstddef> // size_t
 #include <string>
 #include <vector>
 
@@ -13,46 +12,43 @@
 
 
 
-namespace RDTY
+namespace RDTY::WRAPPERS
 {
-	namespace WRAPPERS
+	enum class DescriptorBindingType : size_t
 	{
-		enum class DescriptorBindingType : size_t
-		{
-			UNIFORM_BUFFER,
-		};
+		UNIFORM_BUFFER,
+	};
 
 
 
-		// struct DescriptorBinding
-		struct UniformBlock : public Base
-		{
-			static std::vector<UniformBlock*> instances;
+	// struct DescriptorBinding
+	struct UniformBlock : public Base
+	{
+		static std::vector<UniformBlock*> instances;
 
-			// TODO: destroy all dedicated uniforms
-			static void destroy (void);
-
-
-
-			// No constructors for aggregate type
+		// TODO: destroy all dedicated uniforms
+		static void destroy (void);
 
 
 
-			size_t binding {};
-
-			DescriptorBindingType type {};
-
-			std::string name {};
-
-			std::vector<RDTY::WRAPPERS::Uniform*> uniforms {};
+		// No constructors for aggregate type
 
 
 
-			void injectUniform (RDTY::WRAPPERS::Uniform&);
-			void injectUniform (RDTY::WRAPPERS::Uniform&&);
-			void injectUniform (RDTY::WRAPPERS::Uniform*);
-		};
-	}
+		size_t binding {};
+
+		DescriptorBindingType type {};
+
+		std::string name {};
+
+		std::vector<RDTY::WRAPPERS::Uniform*> uniforms {};
+
+
+
+		void injectUniform (RDTY::WRAPPERS::Uniform&);
+		void injectUniform (RDTY::WRAPPERS::Uniform&&);
+		void injectUniform (RDTY::WRAPPERS::Uniform*);
+	};
 }
 
 
