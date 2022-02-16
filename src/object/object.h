@@ -26,18 +26,9 @@ namespace RDTY::WRAPPERS
 		};
 
 		// bool indexed;
-		// std::vector<uint32_t> index_data;
-		// size_t scene_index_data_offset;
-		// size_t scene_index_data_length;
-
-		// const float vertex_data [9]
-		// {
-		// 	-1.0f, -1.0f, 0.0f,
-
-		// 	-1.0f, 1.0f, 0.0f,
-
-		// 	1.0f, 1.0f, 0.0f,
-		// };
+		std::vector<uint32_t> index_data {};
+		size_t scene_index_data_offset {};
+		size_t scene_index_data_length {};
 	};
 }
 
