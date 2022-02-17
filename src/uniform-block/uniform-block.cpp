@@ -36,8 +36,8 @@ namespace RDTY::WRAPPERS
 
 	struct UniformBlockOffsets
 	{
-		size_t binding = offsetof(UniformBlock, binding);
 		size_t type = offsetof(UniformBlock, type);
+		size_t binding = offsetof(UniformBlock, binding);
 		size_t name = offsetof(UniformBlock, name);
 		size_t uniforms = offsetof(UniformBlock, uniforms);
 	};

@@ -9,18 +9,12 @@
 
 #include "wrappers/src/base/base.h"
 #include "wrappers/src/uniform/uniform.h"
+#include "wrappers/src/descriptor-binding-type/descriptor-binding-type.h"
 
 
 
 namespace RDTY::WRAPPERS
 {
-	enum class DescriptorBindingType : size_t
-	{
-		UNIFORM_BUFFER,
-	};
-
-
-
 	// struct DescriptorBinding
 	struct UniformBlock : public Base
 	{
@@ -35,9 +29,9 @@ namespace RDTY::WRAPPERS
 
 
 
-		size_t binding {};
+		DescriptorBindingType type { DescriptorBindingType::UNIFORM_BLOCK };
 
-		DescriptorBindingType type {};
+		size_t binding {};
 
 		std::string name {};
 

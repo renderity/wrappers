@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "wrappers/src/base/base.h"
-#include "wrappers/src/uniform-block/uniform-block.h"
+// #include "wrappers/src/uniform-block/uniform-block.h"
 
 
 
@@ -18,7 +18,8 @@ namespace RDTY::WRAPPERS
 {
 	struct DescriptorSet : public Base
 	{
-		std::vector<UniformBlock*> bindings {};
+		// std::vector<UniformBlock*> bindings {};
+		std::vector<void*> bindings {};
 	};
 }
 
