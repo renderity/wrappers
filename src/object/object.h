@@ -15,10 +15,10 @@ namespace RDTY::WRAPPERS
 {
 	struct Object : public Base
 	{
-		size_t scene_vertex_data_offset {};
-		size_t scene_vertex_data_length {};
+		size_t scene_position_data_offset {};
+		size_t scene_position_data_length {};
 
-		std::vector<float> vertex_data
+		std::vector<float> position_data
 		{
 			1.0f, 1.0f, 0.0f,
 			-1.0f, 1.0f, 0.0f,

@@ -15,7 +15,7 @@ namespace RDTY::WRAPPERS
 	struct Scene : public Base
 	{
 		// TODO: rename to position_data
-		std::vector<float> vertex_data {};
+		std::vector<float> position_data {};
 		std::vector<float> normal_data {};
 		std::vector<float> color_data {};
 
