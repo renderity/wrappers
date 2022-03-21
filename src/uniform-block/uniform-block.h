@@ -9,7 +9,7 @@
 
 #include "wrappers/src/base/base.h"
 #include "wrappers/src/uniform/uniform.h"
-#include "wrappers/src/descriptor-binding-type/descriptor-binding-type.h"
+#include "wrappers/src/descriptor-binding/descriptor-binding.h"
 
 
 
@@ -29,11 +29,18 @@ namespace RDTY::WRAPPERS
 
 
 
-		DescriptorBindingType type { DescriptorBindingType::UNIFORM_BLOCK };
+		DESCRIPTOR_BINDING::Type type { DESCRIPTOR_BINDING::Type::UNIFORM_BLOCK };
 
 		size_t binding {};
 
 		std::string name {};
+
+		std::vector<DESCRIPTOR_BINDING::Visibility> visibility
+		{
+			RDTY::WRAPPERS::DESCRIPTOR_BINDING::Visibility::VERTEX,
+			RDTY::WRAPPERS::DESCRIPTOR_BINDING::Visibility::FRAGMENT,
+			RDTY::WRAPPERS::DESCRIPTOR_BINDING::Visibility::COMPUTE,
+		};
 
 		std::vector<RDTY::WRAPPERS::Uniform*> uniforms {};
 

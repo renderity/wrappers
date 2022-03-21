@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "wrappers/src/base/base.h"
-#include "wrappers/src/descriptor-binding-type/descriptor-binding-type.h"
+#include "wrappers/src/descriptor-binding/descriptor-binding.h"
 
 
 
@@ -26,7 +26,7 @@ namespace RDTY::WRAPPERS
 
 
 
-		DescriptorBindingType type { DescriptorBindingType::STORAGE_BLOCK };
+		DESCRIPTOR_BINDING::Type type { DESCRIPTOR_BINDING::Type::STORAGE_BLOCK };
 
 		size_t binding {};
 
@@ -35,6 +35,13 @@ namespace RDTY::WRAPPERS
 		void* data {};
 
 		size_t size {};
+
+		std::vector<DESCRIPTOR_BINDING::Visibility> visibility
+		{
+			RDTY::WRAPPERS::DESCRIPTOR_BINDING::Visibility::VERTEX,
+			RDTY::WRAPPERS::DESCRIPTOR_BINDING::Visibility::FRAGMENT,
+			RDTY::WRAPPERS::DESCRIPTOR_BINDING::Visibility::COMPUTE,
+		};
 	};
 }
 

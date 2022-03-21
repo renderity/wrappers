@@ -61,7 +61,7 @@
 				[
 					"$(SRC)/base/base.h",
 					"$(SRC)/uniform/uniform.h",
-					"$(SRC)/descriptor-binding-type/descriptor-binding-type.h",
+					"$(SRC)/descriptor-binding/descriptor-binding.h",
 					"$(SRC)/uniform-block/uniform-block.h"
 				]
 			},
@@ -72,7 +72,7 @@
 				"watch_files":
 				[
 					"$(SRC)/base/base.h",
-					"$(SRC)/descriptor-binding-type/descriptor-binding-type.h",
+					"$(SRC)/descriptor-binding/descriptor-binding.h",
 					"$(SRC)/storage-block/storage-block.h"
 				]
 			},
