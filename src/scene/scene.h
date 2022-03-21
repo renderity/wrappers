@@ -21,6 +21,8 @@ namespace RDTY::WRAPPERS
 
 		std::vector<uint32_t> index_data {};
 
+		std::vector<Object*> objects {};
+
 
 
 		void addObject (Object&);
