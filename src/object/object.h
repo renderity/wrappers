@@ -26,9 +26,22 @@ namespace RDTY::WRAPPERS
 		};
 
 		// bool indexed;
-		std::vector<uint32_t> index_data {};
+
 		size_t scene_index_data_offset {};
 		size_t scene_index_data_length {};
+
+		std::vector<uint32_t> index_data {};
+
+		float bounding_box_min [3] {};
+		float bounding_box_max [3] {};
+
+
+
+		Object (void);
+
+
+
+		void makeBoundingBox (void);
 	};
 }
 
