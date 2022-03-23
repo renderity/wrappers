@@ -40,7 +40,7 @@ namespace RDTY::WRAPPERS
 
 	void Object::makeBoundingBox (void)
 	{
-		for (size_t i {}, i_max { position_data.size() }; i < i_max; i += 3)
+		for (size_t i {}, i_max { position_data.size() }; i < i_max; i += 4)
 		{
 			if (position_data[i + 0] < bounding_box_min[0])
 			{
@@ -80,9 +80,9 @@ namespace RDTY::WRAPPERS
 			(bounding_box_min[2] + bounding_box_max[2]) * 0.5f,
 		};
 
-		const float _min = fmax(fmax(abs(bounding_box_min[0] - center[0]), abs(bounding_box_min[1] - center[1])), abs(bounding_box_min[2] - center[2]));
-		const float _max = fmax(fmax(abs(bounding_box_max[0] - center[0]), abs(bounding_box_max[1] - center[1])), abs(bounding_box_max[2] - center[2]));
-		const float __max = fmax(_min, _max);
+		const float _min { fmax(fmax(abs(bounding_box_min[0] - center[0]), abs(bounding_box_min[1] - center[1])), abs(bounding_box_min[2] - center[2])) };
+		const float _max { fmax(fmax(abs(bounding_box_max[0] - center[0]), abs(bounding_box_max[1] - center[1])), abs(bounding_box_max[2] - center[2])) };
+		const float __max { fmax(_min, _max) };
 
 		bounding_box_min[0] = center[0] - __max;
 		bounding_box_min[1] = center[1] - __max;
