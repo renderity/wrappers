@@ -3,6 +3,7 @@
 
 
 
+#include <cstdint>
 #include <vector>
 
 #include "wrappers/src/base/base.h"
@@ -12,6 +13,19 @@
 
 namespace RDTY::WRAPPERS
 {
+	struct alignas (16) Box
+	{
+		float min [3] {};
+
+		uint32_t triangle_start {};
+
+		float max [3] {};
+
+		uint32_t triangle_end {};
+	};
+
+
+
 	struct Scene : public Base
 	{
 		// TODO: rename to position_data
@@ -23,10 +37,17 @@ namespace RDTY::WRAPPERS
 
 		std::vector<Object*> objects {};
 
+		size_t triangle_count {};
+		Box boxes [1024 * 1024 * 8] {};
+		uint32_t triangles [1024 * 1024] {};
+
 
 
 		void addObject (Object&);
 		void addObject (Object*);
+		void addObjects (std::vector<Object*>);
+
+		void test (void);
 	};
 }
 
