@@ -38,6 +38,7 @@
 
 			{
 				"file": "$(SRC)/renderer/renderer.cpp",
+
 				"watch_files":
 				[
 					"$(SRC)/base/base.h",
@@ -47,6 +48,7 @@
 
 			{
 				"file": "$(SRC)/uniform/uniform.cpp",
+
 				"watch_files":
 				[
 					"$(SRC)/base/base.h",
@@ -103,6 +105,7 @@
 
 			{
 				"file": "$(SRC)/object/object.cpp",
+
 				"watch_files":
 				[
 					"$(SRC)/base/base.h",
