@@ -96,9 +96,9 @@ namespace RDTY::WRAPPERS
 
 		for (size_t i { object.scene_index_data_offset }, i_max { object.scene_index_data_offset + object.scene_index_data_length }; i < i_max; i += 4)
 		{
-			index_data[(i * 4) + 0] += position_data.size() / 4;
-			index_data[(i * 4) + 1] += position_data.size() / 4;
-			index_data[(i * 4) + 2] += position_data.size() / 4;
+			index_data[i + 0] += position_data.size() / 4;
+			index_data[i + 1] += position_data.size() / 4;
+			index_data[i + 2] += position_data.size() / 4;
 		}
 
 
@@ -120,6 +120,9 @@ namespace RDTY::WRAPPERS
 		object->scene_index_data_offset = index_data.size();
 		object->scene_index_data_length = object->index_data.size();
 
+		LOG(object->scene_index_data_offset)
+		LOG(object->scene_index_data_length)
+
 		index_data.resize(object->scene_index_data_offset + object->scene_index_data_length);
 
 		memcpy(index_data.data() + object->scene_index_data_offset, object->index_data.data(), object->scene_index_data_length * 4);
@@ -131,15 +134,18 @@ namespace RDTY::WRAPPERS
 
 		for (size_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
 		{
-			index_data[(i * 4) + 0] += position_data.size() / 4;
-			index_data[(i * 4) + 1] += position_data.size() / 4;
-			index_data[(i * 4) + 2] += position_data.size() / 4;
+			index_data[i + 0] += position_data.size() / 4;
+			index_data[i + 1] += position_data.size() / 4;
+			index_data[i + 2] += position_data.size() / 4;
 		}
 
 
 
 		object->scene_position_data_offset = position_data.size();
 		object->scene_position_data_length = object->position_data.size();
+
+		LOG(object->scene_position_data_offset)
+		LOG(object->scene_position_data_length)
 
 		position_data.resize(object->scene_position_data_offset + object->scene_position_data_length);
 
@@ -267,23 +273,69 @@ namespace RDTY::WRAPPERS
 		// return true;
 	}
 
-	bool testTriangle (size_t triangle_index, float* min, float* max, Object* object)
+	// bool testTriangle (size_t triangle_index, float* min, float* max, Object* object)
+	// {
+	// 	const size_t vertex1_index { object->index_data[triangle_index + 0] };
+	// 	const size_t vertex2_index { object->index_data[triangle_index + 1] };
+	// 	const size_t vertex3_index { object->index_data[triangle_index + 2] };
+
+	// 	p1[0] = object->position_data[(vertex1_index * 4) + 0];
+	// 	p1[1] = object->position_data[(vertex1_index * 4) + 1];
+	// 	p1[2] = object->position_data[(vertex1_index * 4) + 2];
+
+	// 	p2[0] = object->position_data[(vertex2_index * 4) + 0];
+	// 	p2[1] = object->position_data[(vertex2_index * 4) + 1];
+	// 	p2[2] = object->position_data[(vertex2_index * 4) + 2];
+
+	// 	p3[0] = object->position_data[(vertex3_index * 4) + 0];
+	// 	p3[1] = object->position_data[(vertex3_index * 4) + 1];
+	// 	p3[2] = object->position_data[(vertex3_index * 4) + 2];
+
+	// 	vsub(p1p2, p2, p1);
+	// 	vsub(p1p3, p3, p1);
+
+	// 	vsub(p2p1, p1, p2);
+	// 	vsub(p2p3, p3, p2);
+
+	// 	vsub(p3p1, p1, p3);
+	// 	vsub(p3p2, p2, p3);
+
+	// 	if
+	// 	(
+	// 		// point inside box
+	// 		testPointInsideBox(p1, min, max) ||
+	// 		testPointInsideBox(p2, min, max) ||
+	// 		testPointInsideBox(p3, min, max) ||
+
+	// 		// edge intersects box
+	// 		(testRayBoxIntersection(p1, p1p2, min, max) && testRayBoxIntersection(p2, p2p1, min, max)) ||
+	// 		(testRayBoxIntersection(p2, p2p3, min, max) && testRayBoxIntersection(p3, p3p2, min, max)) ||
+	// 		(testRayBoxIntersection(p3, p3p1, min, max) && testRayBoxIntersection(p1, p1p3, min, max))
+	// 	)
+	// 	{
+	// 		return true;
+	// 	}
+
+	// 	return false;
+	// }
+
+	bool testTriangle (const size_t& triangle_index, float* min, float* max, Scene* scene)
 	{
-		const size_t vertex1_index { object->index_data[triangle_index + 0] };
-		const size_t vertex2_index { object->index_data[triangle_index + 1] };
-		const size_t vertex3_index { object->index_data[triangle_index + 2] };
+		const size_t vertex1_index { scene->index_data[triangle_index + 0] };
+		const size_t vertex2_index { scene->index_data[triangle_index + 1] };
+		const size_t vertex3_index { scene->index_data[triangle_index + 2] };
 
-		p1[0] = object->position_data[(vertex1_index * 4) + 0];
-		p1[1] = object->position_data[(vertex1_index * 4) + 1];
-		p1[2] = object->position_data[(vertex1_index * 4) + 2];
+		p1[0] = scene->position_data[(vertex1_index * 4) + 0];
+		p1[1] = scene->position_data[(vertex1_index * 4) + 1];
+		p1[2] = scene->position_data[(vertex1_index * 4) + 2];
 
-		p2[0] = object->position_data[(vertex2_index * 4) + 0];
-		p2[1] = object->position_data[(vertex2_index * 4) + 1];
-		p2[2] = object->position_data[(vertex2_index * 4) + 2];
+		p2[0] = scene->position_data[(vertex2_index * 4) + 0];
+		p2[1] = scene->position_data[(vertex2_index * 4) + 1];
+		p2[2] = scene->position_data[(vertex2_index * 4) + 2];
 
-		p3[0] = object->position_data[(vertex3_index * 4) + 0];
-		p3[1] = object->position_data[(vertex3_index * 4) + 1];
-		p3[2] = object->position_data[(vertex3_index * 4) + 2];
+		p3[0] = scene->position_data[(vertex3_index * 4) + 0];
+		p3[1] = scene->position_data[(vertex3_index * 4) + 1];
+		p3[2] = scene->position_data[(vertex3_index * 4) + 2];
 
 		vsub(p1p2, p2, p1);
 		vsub(p1p3, p3, p1);
@@ -323,7 +375,7 @@ namespace RDTY::WRAPPERS
 
 		for (Object* object : objects)
 		{
-			LOG(object->scene_index_data_offset)
+			// LOG(object->scene_index_data_offset)
 
 			float min [3] {};
 			float max [3] {};
@@ -371,11 +423,19 @@ namespace RDTY::WRAPPERS
 
 						const size_t triangle_start { triangle_count };
 
-						for (uint32_t i {}, i_max { object->index_data.size() }; i < i_max; i += 4)
+						// for (uint32_t i {}, i_max { object->index_data.size() }; i < i_max; i += 4)
+						// {
+						// 	if (testTriangle(i, min, max, object))
+						// 	{
+						// 		triangles[triangle_count++] = object->scene_index_data_offset + (i / 4);
+						// 	}
+						// }
+
+						for (uint32_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
 						{
-							if (testTriangle(i, min, max, object))
+							if (testTriangle(i, min, max, this))
 							{
-								triangles[triangle_count++] = object->scene_index_data_offset + (i / 4);
+								triangles[triangle_count++] = i / 4;
 							}
 						}
 
