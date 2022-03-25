@@ -90,7 +90,7 @@ namespace RDTY::WRAPPERS
 
 		index_data.resize(object.scene_index_data_offset + object.scene_index_data_length);
 
-		memcpy(index_data.data() + object.scene_index_data_offset, object.index_data.data(), object.scene_index_data_length * 4);
+		// memcpy(index_data.data() + object.scene_index_data_offset, object.index_data.data(), object.scene_index_data_length * 4);
 
 
 
@@ -108,7 +108,7 @@ namespace RDTY::WRAPPERS
 
 		position_data.resize(object.scene_position_data_offset * 4 + object.scene_position_data_length * 4);
 
-		memcpy(position_data.data() + object.scene_position_data_offset * 4, object.position_data.data(), object.scene_position_data_length * 4 * 4);
+		// memcpy(position_data.data() + object.scene_position_data_offset * 4, object.position_data.data(), object.scene_position_data_length * 4 * 4);
 
 
 
@@ -120,36 +120,27 @@ namespace RDTY::WRAPPERS
 		object->scene_index_data_offset = index_data.size();
 		object->scene_index_data_length = object->index_data.size();
 
-		LOG(object->scene_index_data_offset)
-		LOG(object->scene_index_data_length)
+		// index_data.resize(object->scene_index_data_offset + object->scene_index_data_length);
 
-		index_data.resize(object->scene_index_data_offset + object->scene_index_data_length);
-
-		memcpy(index_data.data() + object->scene_index_data_offset, object->index_data.data(), object->scene_index_data_length * 4);
+		// memcpy(index_data.data() + object->scene_index_data_offset, object->index_data.data(), object->scene_index_data_length * 4);
 
 
 
-		// LOG(object->scene_index_data_offset)
-		// LOG(object->scene_index_data_offset + object->scene_index_data_length)
-
-		for (size_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
-		{
-			index_data[i + 0] += position_data.size() / 4;
-			index_data[i + 1] += position_data.size() / 4;
-			index_data[i + 2] += position_data.size() / 4;
-		}
+		// for (size_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
+		// {
+		// 	index_data[i + 0] += position_data.size() / 4;
+		// 	index_data[i + 1] += position_data.size() / 4;
+		// 	index_data[i + 2] += position_data.size() / 4;
+		// }
 
 
 
 		object->scene_position_data_offset = position_data.size();
 		object->scene_position_data_length = object->position_data.size();
 
-		LOG(object->scene_position_data_offset)
-		LOG(object->scene_position_data_length)
+		// position_data.resize(object->scene_position_data_offset + object->scene_position_data_length);
 
-		position_data.resize(object->scene_position_data_offset + object->scene_position_data_length);
-
-		memcpy(position_data.data() + object->scene_position_data_offset, object->position_data.data(), object->scene_position_data_length * 4);
+		// memcpy(position_data.data() + object->scene_position_data_offset, object->position_data.data(), object->scene_position_data_length * 4);
 
 
 
@@ -167,9 +158,43 @@ namespace RDTY::WRAPPERS
 
 	void Scene::addObjects (std::vector<Object*> _objects)
 	{
+		size_t index_data_size {};
+		size_t position_data_size {};
+
 		for (Object* object : _objects)
 		{
-			addObject(object);
+			object->scene_index_data_offset = index_data_size;
+			object->scene_index_data_length = object->index_data.size();
+
+			object->scene_position_data_offset = position_data_size;
+			object->scene_position_data_length = object->position_data.size();
+
+			index_data_size += object->scene_index_data_length;
+			position_data_size += object->scene_position_data_length;
+		}
+
+		index_data.resize(index_data_size);
+		position_data.resize(position_data_size);
+
+		for (size_t i {}, i_max { _objects.size() }; i < i_max; ++i)
+		{
+			Object* object { _objects[i] };
+
+			memcpy(index_data.data() + object->scene_index_data_offset, object->index_data.data(), object->scene_index_data_length * 4);
+
+			if (i > 0)
+			{
+				for (size_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
+				{
+					index_data[i + 0] += object->scene_index_data_offset / 4;
+					index_data[i + 1] += object->scene_index_data_offset / 4;
+					index_data[i + 2] += object->scene_index_data_offset / 4;
+				}
+			}
+
+			memcpy(position_data.data() + object->scene_position_data_offset, object->position_data.data(), object->scene_position_data_length * 4);
+
+			objects.push_back(object);
 		}
 	}
 
