@@ -1,14 +1,8 @@
 #include <cstddef> // size_t
 #include <cstring>
 
+#include "wasm-wrapper/src/wasm-log.h"
 #include "wrappers/src/scene/scene.h"
-
-
-
-extern "C" void console_log (size_t);
-#define LOG(x) console_log((size_t) x);
-extern "C" void console_log_f (float);
-#define LOGF(x) console_log_f((float) x);
 
 
 
