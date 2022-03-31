@@ -43,10 +43,13 @@ namespace RDTY::WRAPPERS
 
 
 
-		void addObject (Object&);
-		void addObject (Object*);
+		// void addObject (Object&);
+		// void addObject (Object*);
+		// This fails since vector of references is disallowed!
+		// void addObjects (std::vector<Object&>);
 		void addObjects (std::vector<Object*>);
 
+		bool testTriangle (const size_t&, float*, float*);
 		void test (void);
 	};
 }
