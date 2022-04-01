@@ -15,15 +15,12 @@ namespace RDTY::WRAPPERS
 {
 	struct Object : public Base
 	{
+		// TODO: rename;
 		size_t scene_position_data_offset {};
 		size_t scene_position_data_length {};
 
-		std::vector<float> position_data
-		{
-			1.0f, 1.0f, 0.0f,
-			-1.0f, 1.0f, 0.0f,
-			-1.0f, -1.0f, 0.0f,
-		};
+		std::vector<float> position_data {};
+		std::vector<float> normal_data {};
 
 		// bool indexed;
 
@@ -34,6 +31,7 @@ namespace RDTY::WRAPPERS
 
 		float bounding_box_min [3] {};
 		float bounding_box_max [3] {};
+		size_t dimension_segment_count { 16 };
 
 
 

@@ -11,6 +11,7 @@ namespace RDTY::WRAPPERS
 	struct SceneOffsets
 	{
 		size_t position_data { offsetof(Scene, position_data) };
+		size_t normal_data { offsetof(Scene, normal_data) };
 		size_t index_data { offsetof(Scene, index_data) };
 		size_t objects { offsetof(Scene, objects) };
 		size_t boxes { offsetof(Scene, boxes) };
@@ -160,6 +161,7 @@ namespace RDTY::WRAPPERS
 
 		index_data.resize(index_data_size);
 		position_data.resize(position_data_size);
+		normal_data.resize(position_data_size);
 
 		for (Object* object : _objects)
 		{
@@ -178,6 +180,7 @@ namespace RDTY::WRAPPERS
 			}
 
 			memcpy(position_data.data() + object->scene_position_data_offset, object->position_data.data(), object->scene_position_data_length * sizeof(float));
+			memcpy(normal_data.data() + object->scene_position_data_offset, object->normal_data.data(), object->scene_position_data_length * sizeof(float));
 
 			objects.push_back(object);
 		}
@@ -331,14 +334,14 @@ namespace RDTY::WRAPPERS
 
 	void Scene::test (void)
 	{
-		const size_t dimension_segment_count { 16 };
-
 		size_t box_index_bounding {};
 		size_t box_index_bounding_prev {};
 		size_t box_index {};
 
 		for (Object* object : objects)
 		{
+			const size_t dimension_segment_count { object->dimension_segment_count };
+
 			float min [3] {};
 			float max [3] {};
 
@@ -381,17 +384,22 @@ namespace RDTY::WRAPPERS
 
 
 
-						const size_t triangle_start { triangle_count };
+						const size_t triangle_start { triangle_count / 4 };
 
 						for (uint32_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
 						{
 							if (testTriangle(i, min, max))
 							{
-								triangles[triangle_count++] = i / 4;
+								// triangles[triangle_count++] = i / 4;
+
+								triangles[triangle_count++] = index_data[i + 0];
+								triangles[triangle_count++] = index_data[i + 1];
+								triangles[triangle_count++] = index_data[i + 2];
+								triangles[triangle_count++] = 0;
 							}
 						}
 
-						const size_t triangle_end { triangle_count };
+						const size_t triangle_end { triangle_count / 4 };
 
 
 

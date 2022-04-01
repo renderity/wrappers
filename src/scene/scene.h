@@ -31,15 +31,15 @@ namespace RDTY::WRAPPERS
 		// TODO: rename to position_data
 		std::vector<float> position_data {};
 		std::vector<float> normal_data {};
-		std::vector<float> color_data {};
+		// std::vector<float> color_data {};
 
 		std::vector<uint32_t> index_data {};
 
 		std::vector<Object*> objects {};
 
-		size_t triangle_count {};
 		Box boxes [1024 * 1024 * 8] {};
 		uint32_t triangles [1024 * 1024] {};
+		size_t triangle_count {};
 
 
 
