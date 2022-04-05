@@ -24,8 +24,8 @@ namespace RDTY::WRAPPERS
 
 	// void Scene::addObject (Object& object)
 	// {
-	// 	object.scene_position_data_offset = position_data.size() / 3;
-	// 	object.scene_position_data_length = object.position_data.size() / 3;
+	// 	object.scene_vertex_data_offset = position_data.size() / 3;
+	// 	object.scene_vertex_data_length = object.position_data.size() / 3;
 
 	// 	size_t asd = position_data.size();
 
@@ -51,8 +51,8 @@ namespace RDTY::WRAPPERS
 
 	// void Scene::addObject (Object* object)
 	// {
-	// 	object->scene_position_data_offset = position_data.size() / 3;
-	// 	object->scene_position_data_length = object->position_data.size() / 3;
+	// 	object->scene_vertex_data_offset = position_data.size() / 3;
+	// 	object->scene_vertex_data_length = object->position_data.size() / 3;
 
 	// 	size_t asd = position_data.size();
 
@@ -98,12 +98,12 @@ namespace RDTY::WRAPPERS
 
 
 
-	// 	object.scene_position_data_offset = position_data.size() / 4;
-	// 	object.scene_position_data_length = object.position_data.size() / 4;
+	// 	object.scene_vertex_data_offset = position_data.size() / 4;
+	// 	object.scene_vertex_data_length = object.position_data.size() / 4;
 
-	// 	position_data.resize(object.scene_position_data_offset * 4 + object.scene_position_data_length * 4);
+	// 	position_data.resize(object.scene_vertex_data_offset * 4 + object.scene_vertex_data_length * 4);
 
-	// 	// memcpy(position_data.data() + object.scene_position_data_offset * 4, object.position_data.data(), object.scene_position_data_length * 4 * 4);
+	// 	// memcpy(position_data.data() + object.scene_vertex_data_offset * 4, object.position_data.data(), object.scene_vertex_data_length * 4 * 4);
 
 
 
@@ -130,12 +130,12 @@ namespace RDTY::WRAPPERS
 
 
 
-	// 	object->scene_position_data_offset = position_data.size();
-	// 	object->scene_position_data_length = object->position_data.size();
+	// 	object->scene_vertex_data_offset = position_data.size();
+	// 	object->scene_vertex_data_length = object->position_data.size();
 
-	// 	// position_data.resize(object->scene_position_data_offset + object->scene_position_data_length);
+	// 	// position_data.resize(object->scene_vertex_data_offset + object->scene_vertex_data_length);
 
-	// 	// memcpy(position_data.data() + object->scene_position_data_offset, object->position_data.data(), object->scene_position_data_length * 4);
+	// 	// memcpy(position_data.data() + object->scene_vertex_data_offset, object->position_data.data(), object->scene_vertex_data_length * 4);
 
 
 
@@ -152,11 +152,11 @@ namespace RDTY::WRAPPERS
 			object->scene_index_data_offset = index_data_size;
 			object->scene_index_data_length = object->index_data.size();
 
-			object->scene_position_data_offset = position_data_size;
-			object->scene_position_data_length = object->position_data.size();
+			object->scene_vertex_data_offset = position_data_size;
+			object->scene_vertex_data_length = object->position_data.size();
 
 			index_data_size += object->scene_index_data_length;
-			position_data_size += object->scene_position_data_length;
+			position_data_size += object->scene_vertex_data_length;
 		}
 
 		index_data.resize(index_data_size);
@@ -171,7 +171,7 @@ namespace RDTY::WRAPPERS
 			{
 				for (size_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
 				{
-					size_t offset { object->scene_position_data_offset / 4 };
+					size_t offset { object->scene_vertex_data_offset / 4 };
 
 					index_data[i + 0] += offset;
 					index_data[i + 1] += offset;
@@ -179,8 +179,8 @@ namespace RDTY::WRAPPERS
 				}
 			}
 
-			memcpy(position_data.data() + object->scene_position_data_offset, object->position_data.data(), object->scene_position_data_length * sizeof(float));
-			memcpy(normal_data.data() + object->scene_position_data_offset, object->normal_data.data(), object->scene_position_data_length * sizeof(float));
+			memcpy(position_data.data() + object->scene_vertex_data_offset, object->position_data.data(), object->scene_vertex_data_length * sizeof(float));
+			memcpy(normal_data.data() + object->scene_vertex_data_offset, object->normal_data.data(), object->scene_vertex_data_length * sizeof(float));
 
 			objects.push_back(object);
 		}

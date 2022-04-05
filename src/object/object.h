@@ -15,14 +15,11 @@ namespace RDTY::WRAPPERS
 {
 	struct Object : public Base
 	{
-		// TODO: rename;
-		size_t scene_position_data_offset {};
-		size_t scene_position_data_length {};
+		size_t scene_vertex_data_offset {};
+		size_t scene_vertex_data_length {};
 
 		std::vector<float> position_data {};
 		std::vector<float> normal_data {};
-
-		// bool indexed;
 
 		size_t scene_index_data_offset {};
 		size_t scene_index_data_length {};
