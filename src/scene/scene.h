@@ -24,6 +24,19 @@ namespace RDTY::WRAPPERS
 		uint32_t triangle_end {};
 	};
 
+	struct P
+	{
+		float p1 [3] {};
+		float p2 [3] {};
+		float p3 [3] {};
+		float p1p2 [3] {};
+		float p1p3 [3] {};
+		float p2p1 [3] {};
+		float p2p3 [3] {};
+		float p3p1 [3] {};
+		float p3p2 [3] {};
+	};
+
 
 
 	struct Scene : public Base
@@ -37,8 +50,8 @@ namespace RDTY::WRAPPERS
 
 		std::vector<Object*> objects {};
 
-		Box boxes [1024 * 1024 * 8] {};
-		uint32_t triangles [1024 * 1024] {};
+		Box boxes [512 * 512] {};
+		uint32_t triangles [1024 * 1024 * 2] {};
 		size_t triangle_count {};
 
 
@@ -50,7 +63,9 @@ namespace RDTY::WRAPPERS
 		void addObjects (std::vector<Object*>);
 
 		bool testTriangle (const size_t&, float*, float*);
+		bool testTriangle2 (const size_t&, float*, float*, P*);
 		void test (void);
+		void test2 (Object*);
 	};
 }
 

@@ -15,6 +15,8 @@ namespace RDTY::WRAPPERS
 {
 	struct Object : public Base
 	{
+		size_t scene_index {};
+
 		size_t scene_vertex_data_offset {};
 		size_t scene_vertex_data_length {};
 

@@ -11,6 +11,7 @@ namespace RDTY::WRAPPERS
 {
 	struct ObjectOffsets
 	{
+		size_t scene_index = offsetof(Object, scene_index);
 		size_t scene_vertex_data_offset = offsetof(Object, scene_vertex_data_offset);
 		size_t scene_vertex_data_length = offsetof(Object, scene_vertex_data_length);
 		size_t position_data = offsetof(Object, position_data);
