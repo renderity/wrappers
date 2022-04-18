@@ -118,6 +118,7 @@
 
 				"watch_files":
 				[
+					"$(REPS)/renderity/math/src/_intrin.h",
 					"$(SRC)/base/base.h",
 					"$(SRC)/object/object.h",
 					"$(SRC)/scene/scene.h"

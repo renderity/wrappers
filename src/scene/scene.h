@@ -37,6 +37,19 @@ namespace RDTY::WRAPPERS
 		float p3p2 [3] {};
 	};
 
+	struct PSIMD
+	{
+		float p1 [4] {};
+		float p2 [4] {};
+		float p3 [4] {};
+		float p1p2 [4] {};
+		float p1p3 [4] {};
+		float p2p1 [4] {};
+		float p2p3 [4] {};
+		float p3p1 [4] {};
+		float p3p2 [4] {};
+	};
+
 
 
 	struct Scene : public Base
@@ -66,6 +79,9 @@ namespace RDTY::WRAPPERS
 		bool testTriangle2 (const size_t&, float*, float*, P*);
 		void test (void);
 		void test2 (Object*);
+
+		bool testTriangleSimd (const size_t&, float*, float*, PSIMD*);
+		void testSimd (Object*);
 	};
 }
 
