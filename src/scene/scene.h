@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "math/src/_intrin.h"
 #include "wrappers/src/base/base.h"
 #include "wrappers/src/object/object.h"
 
@@ -39,15 +40,15 @@ namespace RDTY::WRAPPERS
 
 	struct PSIMD
 	{
-		float p1 [4] {};
-		float p2 [4] {};
-		float p3 [4] {};
-		float p1p2 [4] {};
-		float p1p3 [4] {};
-		float p2p1 [4] {};
-		float p2p3 [4] {};
-		float p3p1 [4] {};
-		float p3p2 [4] {};
+		__m128 p1 {};
+		__m128 p2 {};
+		__m128 p3 {};
+		__m128 p1p2 {};
+		__m128 p1p3 {};
+		__m128 p2p1 {};
+		__m128 p2p3 {};
+		__m128 p3p1 {};
+		__m128 p3p2 {};
 	};
 
 
@@ -80,7 +81,7 @@ namespace RDTY::WRAPPERS
 		void test (void);
 		void test2 (Object*);
 
-		bool testTriangleSimd (const size_t&, float*, float*, PSIMD*);
+		bool testTriangleSimd (const size_t&, const __m128&, const __m128&, PSIMD*);
 		void testSimd (Object*);
 	};
 }

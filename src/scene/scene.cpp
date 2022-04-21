@@ -2,7 +2,6 @@
 #include <cstring>
 #include <algorithm>
 
-#include "math/src/_intrin.h"
 #include "wasm-wrapper/src/wasm-log.h"
 #include "wrappers/src/scene/scene.h"
 
@@ -209,7 +208,24 @@ namespace RDTY::WRAPPERS
 		target[2] = a[2] - b[2];
 	}
 
+	void vsub (__m128& target, const __m128& a, const __m128& b)
+	{
+		target[0] = a[0] - b[0];
+		target[1] = a[1] - b[1];
+		target[2] = a[2] - b[2];
+	}
+
 	bool testPointInsideBox (float* point, float* min, float* max)
+	{
+		return
+		(
+			point[0] <= max[0] && point[0] >= min[0] &&
+			point[1] <= max[1] && point[1] >= min[1] &&
+			point[2] <= max[2] && point[2] >= min[2]
+		);
+	}
+
+	bool testPointInsideBox (const __m128& point, const __m128& min, const __m128& max)
 	{
 		return
 		(
@@ -290,21 +306,10 @@ namespace RDTY::WRAPPERS
 		// return true;
 	}
 
-	bool testRayBoxIntersectionSimd (float* ray_origin, float* ray_direction, float* box_min, float* box_max)
+	bool testRayBoxIntersectionSimd (const __m128& ray_origin, const __m128& ray_direction, const __m128& box_min, const __m128& box_max)
 	{
-		__m128 ray_origin_128 = _mm_load_ps(ray_origin);
-		__m128 ray_direction_128 = _mm_load_ps(ray_direction);
-
-		__m128 t_min = _mm_div_ps(_mm_sub_ps(_mm_load_ps(box_min), ray_origin_128), ray_direction_128);
-		__m128 t_max = _mm_div_ps(_mm_sub_ps(_mm_load_ps(box_max), ray_origin_128), ray_direction_128);
-
-		// float t1x = std::min(t_min[0], t_max[0]);
-		// float t1y = std::min(t_min[1], t_max[1]);
-		// float t1z = std::min(t_min[2], t_max[2]);
-
-		// float t2x = std::max(t_min[0], t_max[0]);
-		// float t2y = std::max(t_min[1], t_max[1]);
-		// float t2z = std::max(t_min[2], t_max[2]);
+		__m128 t_min = _mm_div_ps(_mm_sub_ps(box_min, ray_origin), ray_direction);
+		__m128 t_max = _mm_div_ps(_mm_sub_ps(box_max, ray_origin), ray_direction);
 
 		__m128 min = _mm_min_ps(t_min, t_max);
 		__m128 max = _mm_max_ps(t_min, t_max);
@@ -317,113 +322,35 @@ namespace RDTY::WRAPPERS
 			return false;
 		}
 
-		__m128 intersection = _mm_add_ps(_mm_mul_ps(ray_direction_128, _mm_load_ps1(&t_near)), ray_origin_128);
+		__m128 intersection = _mm_add_ps(_mm_mul_ps(ray_direction, _mm_load_ps1(&t_near)), ray_origin);
 
-		__m128 qwe = _mm_sub_ps(intersection, ray_origin_128);
+		__m128 qwe = _mm_sub_ps(intersection, ray_origin);
 
 		float dot = (ray_direction[0] * qwe[0]) + (ray_direction[1] * qwe[1]) + (ray_direction[2] * qwe[2]);
 
 		return dot > 0.0f;
-
-
-
-
-
-		// float tmin { (box_min[0] - ray_origin[0]) / ray_direction[0] };
-		// float tmax { (box_max[0] - ray_origin[0]) / ray_direction[0] };
-
-		// if (tmin > tmax)
-		// {
-		// 	float _tmp { tmin };
-		// 	tmin = tmax;
-		// 	tmax = _tmp;
-		// }
-
-		// float tymin { (box_min[1] - ray_origin[1]) / ray_direction[1] };
-		// float tymax { (box_max[1] - ray_origin[1]) / ray_direction[1] };
-
-		// if (tymin > tymax)
-		// {
-		// 	float _tmp { tymin };
-		// 	tymin = tymax;
-		// 	tymax = _tmp;
-		// }
-
-		// if ((tmin > tymax) || (tymin > tmax))
-		// {
-		// 	return false;
-		// }
-
-		// if (tymin > tmin)
-		// {
-		// 	tmin = tymin;
-		// }
-
-		// if (tymax < tmax)
-		// {
-		// 	tmax = tymax;
-		// }
-
-		// float tzmin { (box_min[2] - ray_origin[2]) / ray_direction[2] };
-		// float tzmax { (box_max[2] - ray_origin[2]) / ray_direction[2] };
-
-		// if (tzmin > tzmax)
-		// {
-		// 	float _tmp { tzmin };
-		// 	tzmin = tzmax;
-		// 	tzmax = _tmp;
-		// }
-
-		// if ((tmin > tzmax) || (tzmin > tmax))
-		// {
-		// 	return false;
-		// }
-
-		// if (tzmin > tmin)
-		// {
-		// 	tmin = tzmin;
-		// }
-
-		// if (tzmax < tmax)
-		// {
-		// 	tmax = tzmax;
-		// }
-
-		// if (tmin > tmax)
-		// {
-		// 	return false;
-		// }
-
-		// return (tmin > 0 && tmax > 0);
-		// // return true;
 	}
 
-	bool Scene::testTriangleSimd (const size_t& triangle_index, float* min, float* max, PSIMD* p)
+	bool Scene::testTriangleSimd (const size_t& triangle_index, const __m128& min, const __m128& max, PSIMD* p)
 	{
 		const size_t vertex1_index { index_data[triangle_index + 0] };
 		const size_t vertex2_index { index_data[triangle_index + 1] };
 		const size_t vertex3_index { index_data[triangle_index + 2] };
 
-		p->p1[0] = position_data[(vertex1_index * 4) + 0];
-		p->p1[1] = position_data[(vertex1_index * 4) + 1];
-		p->p1[2] = position_data[(vertex1_index * 4) + 2];
+		p->p1 = _mm_load_ps(&position_data[vertex1_index * 4]);
+		p->p2 = _mm_load_ps(&position_data[vertex2_index * 4]);
+		p->p3 = _mm_load_ps(&position_data[vertex3_index * 4]);
 
-		p->p2[0] = position_data[(vertex2_index * 4) + 0];
-		p->p2[1] = position_data[(vertex2_index * 4) + 1];
-		p->p2[2] = position_data[(vertex2_index * 4) + 2];
+		p->p1p2 = _mm_sub_ps(p->p2, p->p1);
+		p->p1p3 = _mm_sub_ps(p->p3, p->p1);
 
-		p->p3[0] = position_data[(vertex3_index * 4) + 0];
-		p->p3[1] = position_data[(vertex3_index * 4) + 1];
-		p->p3[2] = position_data[(vertex3_index * 4) + 2];
+		p->p2p1 = _mm_sub_ps(p->p1, p->p2);
+		p->p2p3 = _mm_sub_ps(p->p3, p->p2);
 
-		vsub(p->p1p2, p->p2, p->p1);
-		vsub(p->p1p3, p->p3, p->p1);
+		p->p3p1 = _mm_sub_ps(p->p1, p->p3);
+		p->p3p2 = _mm_sub_ps(p->p2, p->p3);
 
-		vsub(p->p2p1, p->p1, p->p2);
-		vsub(p->p2p3, p->p3, p->p2);
 
-		vsub(p->p3p1, p->p1, p->p3);
-		vsub(p->p3p2, p->p2, p->p3);
 
 		if
 		(
@@ -446,12 +373,10 @@ namespace RDTY::WRAPPERS
 
 	void Scene::testSimd (Object* object)
 	{
-		size_t bi {};
-
 		PSIMD p {};
 
-		float _min [4] {};
-		float _max [4] {};
+		__m128 _min {};
+		__m128 _max {};
 
 		size_t object_length = objects.size();
 		size_t object_index = object->scene_index;
@@ -530,8 +455,6 @@ namespace RDTY::WRAPPERS
 					boxes[box_index].max[2] = _max[2];
 
 					boxes[box_index].triangle_end = triangle_end;
-
-					bi = box_index - box_index_bounding;
 				}
 			}
 		}
@@ -725,8 +648,6 @@ namespace RDTY::WRAPPERS
 
 	void Scene::test2 (Object* object)
 	{
-		size_t bi {};
-
 		P p {};
 
 		float _min [3] {};
@@ -809,8 +730,6 @@ namespace RDTY::WRAPPERS
 					boxes[box_index].max[2] = _max[2];
 
 					boxes[box_index].triangle_end = triangle_end;
-
-					bi = box_index - box_index_bounding;
 				}
 			}
 		}
