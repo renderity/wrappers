@@ -14,6 +14,7 @@
 
 namespace RDTY::WRAPPERS
 {
+	// TODO: wrap into SCENE namespace.
 	struct alignas (16) Box
 	{
 		float min [3] {};
@@ -55,17 +56,20 @@ namespace RDTY::WRAPPERS
 
 	struct Scene : public Base
 	{
-		// TODO: rename to position_data
-		std::vector<float> position_data {};
-		std::vector<float> normal_data {};
+		// std::vector<float> position_data {};
+		std::vector<__m128> position_data {};
+		// std::vector<float> normal_data {};
+		std::vector<__m128> normal_data {};
 		// std::vector<float> color_data {};
 
-		std::vector<uint32_t> index_data {};
+		// std::vector<uint32_t> index_data {};
+		std::vector<__m128i> index_data {};
 
 		std::vector<Object*> objects {};
 
 		Box boxes [512 * 512] {};
-		uint32_t triangles [1024 * 1024 * 2] {};
+		// uint32_t triangles [1024 * 1024 * 2] {};
+		__m128i triangles [1024 * 1024 * 2 / 4] {};
 		size_t triangle_count {};
 
 
@@ -81,7 +85,7 @@ namespace RDTY::WRAPPERS
 		void test (void);
 		void test2 (Object*);
 
-		bool testTriangleSimd (const size_t&, const __m128&, const __m128&, PSIMD*);
+		bool testTriangleSimd (const __m128i&, const __m128&, const __m128&, PSIMD*);
 		void testSimd (Object*);
 	};
 }
