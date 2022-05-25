@@ -18,13 +18,13 @@ namespace RDTY::WRAPPERS
 		size_t scene_index {};
 
 		size_t scene_vertex_data_offset {};
-		size_t scene_vertex_data_size {};
+		size_t scene_vertex_data_length {};
 
 		std::vector<float> position_data {};
 		std::vector<float> normal_data {};
 
 		size_t scene_index_data_offset {};
-		size_t scene_index_data_size {};
+		size_t scene_index_data_length {};
 
 		std::vector<uint32_t> index_data {};
 

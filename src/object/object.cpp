@@ -13,11 +13,11 @@ namespace RDTY::WRAPPERS
 	{
 		size_t scene_index = offsetof(Object, scene_index);
 		size_t scene_vertex_data_offset = offsetof(Object, scene_vertex_data_offset);
-		size_t scene_vertex_data_size = offsetof(Object, scene_vertex_data_size);
+		size_t scene_vertex_data_length = offsetof(Object, scene_vertex_data_length);
 		size_t position_data = offsetof(Object, position_data);
 		size_t normal_data = offsetof(Object, normal_data);
 		size_t scene_index_data_offset = offsetof(Object, scene_index_data_offset);
-		size_t scene_index_data_size = offsetof(Object, scene_index_data_size);
+		size_t scene_index_data_length = offsetof(Object, scene_index_data_length);
 		size_t index_data = offsetof(Object, index_data);
 		size_t bounding_box_min = offsetof(Object, bounding_box_min);
 		size_t bounding_box_max = offsetof(Object, bounding_box_max);

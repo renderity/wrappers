@@ -25,7 +25,6 @@ namespace RDTY::WRAPPERS
 		size_t name = offsetof(StorageBlock, name);
 		size_t data = offsetof(StorageBlock, data);
 		size_t size = offsetof(StorageBlock, size);
-		size_t visibility = offsetof(StorageBlock, visibility);
 	};
 
 	StorageBlockOffsets storage_block_offsets {};
