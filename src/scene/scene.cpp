@@ -436,7 +436,7 @@ namespace RDTY::WRAPPERS
 
 					const size_t triangle_start { triangles_index / 4 };
 
-					for (uint32_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
+					for (uint32_t i { (uint32_t) object->scene_index_data_offset }, i_max { (uint32_t) (object->scene_index_data_offset + object->scene_index_data_length) }; i < i_max; i += 4)
 					{
 						if (testTriangleSimd(i, _min, _max, &p))
 						{
@@ -615,7 +615,7 @@ namespace RDTY::WRAPPERS
 
 						const size_t triangle_start { triangle_count / 4 };
 
-						for (uint32_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
+						for (uint32_t i { (uint32_t) object->scene_index_data_offset }, i_max { (uint32_t) (object->scene_index_data_offset + object->scene_index_data_length) }; i < i_max; i += 4)
 						{
 							if (testTriangle(i, min, max))
 							{
@@ -711,7 +711,7 @@ namespace RDTY::WRAPPERS
 
 					const size_t triangle_start { triangles_index / 4 };
 
-					for (uint32_t i { object->scene_index_data_offset }, i_max { object->scene_index_data_offset + object->scene_index_data_length }; i < i_max; i += 4)
+					for (uint32_t i { (uint32_t) object->scene_index_data_offset }, i_max { (uint32_t) (object->scene_index_data_offset + object->scene_index_data_length) }; i < i_max; i += 4)
 					{
 						if (testTriangle2(i, _min, _max, &p))
 						{
