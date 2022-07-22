@@ -352,6 +352,15 @@ namespace RDTY::WRAPPERS
 
 
 
+		// TODO: test case when there are no triangle points inside box
+		// and no triangle edges intersecting box,
+		// but triangle surface cuts box.
+		//
+		// Triangle cuts box if any edge of the box
+		// intersects triangle.
+		//
+		// This test case can be avoided if all geometry
+		// triangles entirely fit into geomerty single atomic box.
 		if
 		(
 			// point inside box
