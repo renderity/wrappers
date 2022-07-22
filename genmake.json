@@ -6,6 +6,11 @@
 
 	"variables2":
 	{
+		"clang-arm-macos":
+		{
+			"FLAGS_ADD": "-I $(REPS)/DLTcollab/sse2neon"
+		},
+
 		"clang-wasm32|clang-wasm64":
 		{
 			"FLAGS_ADD": "-matomics -mbulk-memory"
